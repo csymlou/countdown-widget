@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>配置倒数日</title>
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <main class="settings-page">
+    <header data-tiny-drag>
+      <div>
+        <span>Countdown Widget</span>
+        <h1>配置倒数日</h1>
+      </div>
+      <button id="closeBtn" data-tiny-nodrag type="button">×</button>
+    </header>
+
+    <section class="preview-card" id="previewCard">
+      <strong id="previewTitle">重要日子</strong>
+      <div><b id="previewDays">--</b><span id="previewUnit">天</span></div>
+    </section>
+
+    <section class="form-card">
+      <label class="wide">事件名称<input id="titleInput" maxlength="80" placeholder="例如：春节" /></label>
+      <label>目标日期<input id="dateInput" type="date" /></label>
+      <label class="switch"><input id="includeToday" type="checkbox" /><span>包含今天</span></label>
+      <label>文字颜色<input id="textColorInput" type="color" /></label>
+      <label>背景颜色<input id="backgroundColorInput" type="color" /></label>
+      <label>文字透明度 <b id="textOpacityText">100%</b><input id="textOpacityInput" type="range" min="10" max="100" step="1" /></label>
+      <label>背景透明度 <b id="backgroundOpacityText">92%</b><input id="backgroundOpacityInput" type="range" min="10" max="100" step="1" /></label>
+      <label class="switch"><input id="launchAtLogin" type="checkbox" /><span>开机自启</span></label>
+      <label class="switch"><input id="hideTaskbarIcon" type="checkbox" /><span>图标折叠到托盘</span></label>
+    </section>
+
+    <footer>
+      <button id="cancelBtn" type="button">取消</button>
+      <button id="saveBtn" type="button">保存</button>
+    </footer>
+  </main>
+  <script src="settings.js"></script>
+</body>
+</html>

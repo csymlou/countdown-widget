@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Countdown Widget</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app" class="widget" data-tiny-drag>
+    <section id="display" class="display">
+      <button id="settingsBtn" class="ghost" data-tiny-nodrag title="设置">⚙</button>
+      <h1 id="title">重要日子</h1>
+      <div class="countline"><strong id="days">--</strong><span id="unit">天</span></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

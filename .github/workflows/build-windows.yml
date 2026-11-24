@@ -1,0 +1,55 @@
+name: Build Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+
+jobs:
+  build-windows-x64:
+    name: Build Windows x64
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install tinyjs
+        shell: pwsh
+        run: |
+          irm https://tinyjs.app/install.ps1 | iex
+          $candidatePaths = @(
+            "$env:USERPROFILE\.tinyjs\bin",
+            "$env:LOCALAPPDATA\tinyjs\bin",
+            "$env:LOCALAPPDATA\Programs\tinyjs",
+            "$env:LOCALAPPDATA\Programs\tinyjs\bin"
+          )
+          foreach ($path in $candidatePaths) {
+            if (Test-Path $path) {
+              Add-Content $env:GITHUB_PATH $path
+            }
+          }
+
+      - name: Verify toolchain
+        shell: pwsh
+        run: |
+          where.exe tinyjs
+          tinyjs --version
+          Write-Host "PROCESSOR_ARCHITECTURE=$env:PROCESSOR_ARCHITECTURE"
+
+      - name: Build
+        shell: pwsh
+        run: tinyjs build
+
+      - name: Package portable app
+        shell: pwsh
+        run: |
+          if (Test-Path countdown-widget-win-x64.zip) { Remove-Item countdown-widget-win-x64.zip -Force }
+          Compress-Archive -Path dist\* -DestinationPath countdown-widget-win-x64.zip -Force
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: countdown-widget-win-x64
+          path: countdown-widget-win-x64.zip

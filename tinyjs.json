@@ -1,0 +1,16 @@
+{
+  "name": "countdown-widget",
+  "title": "Countdown Widget",
+  "size": "520x150",
+  "id": "com.local.countdownwidget",
+  "version": "0.1.0",
+  "minTinyjsVersion": "0.50.1",
+  "icon": "icon.png",
+  "contextMenu": false,
+  "windowPlacement": true,
+  "chrome": {
+    "frame": false,
+    "windowControls": false,
+    "acceptsFirstMouse": true
+  }
+}
