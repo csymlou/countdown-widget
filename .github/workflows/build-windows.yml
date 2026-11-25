@@ -21,20 +21,29 @@ jobs:
           irm https://tinyjs.app/install.ps1 | iex
           $candidatePaths = @(
             "$env:USERPROFILE\.tinyjs\bin",
+            "$env:USERPROFILE\.tinyjs",
             "$env:LOCALAPPDATA\tinyjs\bin",
+            "$env:LOCALAPPDATA\tinyjs",
             "$env:LOCALAPPDATA\Programs\tinyjs",
             "$env:LOCALAPPDATA\Programs\tinyjs\bin"
           )
           foreach ($path in $candidatePaths) {
             if (Test-Path $path) {
               Add-Content $env:GITHUB_PATH $path
+              $env:PATH = "$path;$env:PATH"
             }
+          }
+          $tinyjs = Get-ChildItem -Path $env:USERPROFILE,$env:LOCALAPPDATA -Filter tinyjs.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          if ($tinyjs) {
+            Add-Content $env:GITHUB_PATH $tinyjs.DirectoryName
+            $env:PATH = "$($tinyjs.DirectoryName);$env:PATH"
+            Write-Host "Found tinyjs at $($tinyjs.FullName)"
           }
 
       - name: Verify toolchain
         shell: pwsh
         run: |
-          where.exe tinyjs
+          Get-Command tinyjs -ErrorAction Stop
           tinyjs --version
           Write-Host "PROCESSOR_ARCHITECTURE=$env:PROCESSOR_ARCHITECTURE"
 
